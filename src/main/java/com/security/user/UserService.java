@@ -20,7 +20,7 @@ public class UserService {
     private final PasswordEncoder encoder;
     private final UserRepository userRepository;
 
-    public UserDto.Response create(UserDto.Post data) {
+    public User create(UserDto.Post data) {
         List<GrantedAuthority> auth = createAuthorities(Role.USER.name());
 
         String encrypt = encoder.encode(data.getPassword());
@@ -33,7 +33,7 @@ public class UserService {
 
         userRepository.save(user);
 
-        return UserDto.fromEntity(user);
+        return user;
     }
 
     private List<GrantedAuthority> createAuthorities(String... roles) {
