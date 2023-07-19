@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -15,9 +17,12 @@ public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Setter private String name;
-    @Setter private int age;
-    @Setter private Role role = Role.ROLE_USER;
     @Setter private String password;
+    @Setter private int age;
+
+    @Setter
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> role = new ArrayList<>();
 
     private final LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime modifiedAt;
