@@ -21,10 +21,13 @@ public class UserService {
     private final UserRepository userRepository;
 
     public User create(UserDto.Post data) {
-        List<GrantedAuthority> auth = createAuthorities(Role.USER.name());
+        // User 권한 지정
+        List<GrantedAuthority> auth = createAuthorities(Role.ROLE_USER.name());
 
+        // Password Encoding
         String encrypt = encoder.encode(data.getPassword());
 
+        // Create User
         User user = User.createOf(data.getName(), encrypt, data.getAge());
 
         UserDetails details = (UserDetails) user;
@@ -36,6 +39,7 @@ public class UserService {
         return user;
     }
 
+    // SimpleGrantedAuthority 사용할때 'ROLE_' + 권한명으로 지정 안해주면 권한 매핑 안됨
     private List<GrantedAuthority> createAuthorities(String... roles) {
         return Arrays.stream(roles)
                 .map(SimpleGrantedAuthority::new)
