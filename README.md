@@ -1,4 +1,5 @@
 ## Remind Spring Security
+- Spring Security 복습
 - Spring Security 6.1.2 (Spring Security 5 에서 사용하던 각종 함수들이 많이 Deprecated 됨)
 - Spring Boot 3.1.1
 - JDK 17
