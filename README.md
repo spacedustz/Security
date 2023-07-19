@@ -15,3 +15,5 @@
 - DelegatingPasswordEncoder
 - Custom한 UserDetails, Authority 부여
 - Multi Factor Authentication & Custom한 직접 인증 처리를 위한 AuthenticationProvider
+  - AuthenticationProvider에서 AuthenticationException 외에 Exception 발생 시 AuthenticationExcpetion으로 Re-Throw
+  - 이유 : 등록된 회원이 없을 시 Business Logic에서 다른 Exception을 던지는데 Provider를 거쳐 그대로 Spring Security 내부로 이동하기 때문에 Re-Throw 처리를 해줘야 함
