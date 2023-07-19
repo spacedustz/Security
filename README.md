@@ -9,3 +9,9 @@
 - Lombok
 - Spring Data JPA
 - H2
+
+## 복습 진행 상황
+- Local Test를 위한 Inmemory User 권한 생성 방식
+- DelegatingPasswordEncoder
+- Custom한 UserDetails, Authority 부여
+- Multi Factor Authentication & Custom한 직접 인증 처리를 위한 AuthenticationProvider
