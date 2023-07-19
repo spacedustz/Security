@@ -24,15 +24,15 @@ public class UserDto {
         private int age;
         private String role;
         private LocalDateTime createdAt;
-    }
 
-    public static UserDto.Response fromEntity(User user) {
-        return new UserDto.Response(
-                user.getId(),
-                user.getName(),
-                user.getAge(),
-                user.getRole().toString(),
-                user.getCreatedAt()
-        );
+        public static UserDto.Response fromEntity(User user) {
+            return new UserDto.Response(
+                    user.getId(),
+                    user.getName(),
+                    user.getAge(),
+                    user.getRole().toString(),
+                    user.getCreatedAt()
+            );
+        }
     }
 }
