@@ -1,9 +1,6 @@
 package com.security.user;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,12 +10,13 @@ import java.time.LocalDateTime;
 
 @Entity @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "USERS")
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Setter private String name;
     @Setter private int age;
-    @Setter private Role role = Role.USER;
+    @Setter private Role role = Role.ROLE_USER;
     @Setter private String password;
 
     private final LocalDateTime createdAt = LocalDateTime.now();
