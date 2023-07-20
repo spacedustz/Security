@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class UserDto {
 
@@ -22,7 +23,7 @@ public class UserDto {
         private Long id;
         private String name;
         private int age;
-        private String role;
+        private List<String> role;
         private LocalDateTime createdAt;
 
         public static UserDto.Response fromEntity(User user) {
@@ -30,7 +31,7 @@ public class UserDto {
                     user.getId(),
                     user.getName(),
                     user.getAge(),
-                    user.getRole().toString(),
+                    user.getRole(),
                     user.getCreatedAt()
             );
         }
