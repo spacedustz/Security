@@ -15,8 +15,9 @@
 
 ---
 
-## Remind 완료 리스트
-> Security 기본 설정 (로그인, 로그아웃, 회원가입, Http Security 설정)
+# Remind 완료 리스트
+
+## Security 기본 설정 (로그인, 로그아웃, 회원가입, Http Security 설정)
 - Local Test를 위한 Inmemory User 권한 생성 방식
 - DelegatingPasswordEncoder
 - Custom한 UserDetails, Authority 부여
@@ -26,8 +27,7 @@
 
 <br>
 
-**요약**
-
+> 요약
 - Spring Security에서 지원하는 InMemory User는 말 그대로 메모리에 등록되어 사용되는 User이므로 애플리케이션 실행이 종료되면 InMember User 역시 메모리에서 사라진다.
 
 - InMemory User를 사용하는 방식은 테스트 환경이나 데모 환경에서 사용할 수 있는 방법이다.
@@ -51,13 +51,55 @@
 
 - AuthenticationProvider는 Spring Security에서 클라이언트로부터 전달받은 인증 정보를 바탕으로 인증된 사용자인지를 처리하는 Spring Security의 컴포넌트이다.
 
+---
+
+## Servlet Filter Chain
+- Servlet 기반 어플리케이션에서는 javax.servlet 패키지의 인터페이스를 정의하여 doFilter() 함수 호출을 통해 필터 체인을 구성할 수 있다.
+- 이러한 필터체인은 웹 요청,응답 전/후 처리를 할 수 있다.
+- 흐름은 웹요청 -> ServletFilterChain -> HttpServlet -> DispatcherServlet / 응답은 그 반대 이다.
+- Spring Security에서의 Filter는 Servlet Filter Chain에 DelegatingFilterProxy, FilterChainProxy 이다.
+
 <br>
 
->JWT
+> **Delegating Filter Proxy란?**
+
+Spring Security 역시 Spring ApplicationContext를 이용한다.<br>
+서블릿 필터와 연결되는 Spring Security만의 필터를 ApplicationContext에 Bean으로 등록한 후, <br>
+이 Bean들을 이용해서 보안과 관련된 작업을 처리하는 시작점이 DelegatingFilterProxy이다.<br>
+즉, 보안과 관련된 직접적인 처리를 하는것이 아닌, Servlet Container 영역의 필터와 ApplicationContext에 등록된 필터들을 연결해주는 Bridge 역할이다.
+
+<br>
+
+> **FilterChainProxy란?**
+
+Spring Security만의 보안을 위한 작업을 처리하는 Filter들의 모음이자 Spring Security의 필터를 사용하기 위한 진입점이다.<br>
+Spring Security의 Filter Chain은 URL별로 여러개 등록할 수 있고, Filter Chain이 있을떄 어떤 Filter Chain을 사용할지는<br>
+FilterChainProxy가 결정하며, 가장 먼저 매칭된 Filter Chain을 실행한다.
+즉, Filter들 사이에 우선순위를 잘 적용해 수행 우선순위를 잘 정하는것도 중요하다.
+
+<br>
+
+> **요약**
+
+Servlet FIlterChain은 요청 URI Path를 기반으로 HttpServlet Request를 처리한다.<br>
+따라서 요청 URI 경로를 기반으로 어떤 Filter와 어떤 Servlet을 매핑할지 결정하기 때문에,<br>
+Spring Security의 FilterChain을 구성할 때 FilterChainProxy의 필터 실행 우선순위를 생각하며 URI Path를 잘 설정하기
+
+<br>
+
+Filter의 우선순위를 정하는 방법
+- `@Order` 어노테이션 사용
+- `Ordered` 인터페이스를 구현하는 방법
+- `FilterRegistrationBean`을 이용해 순서를 명시적으로 정할수도 있다.
+
+
+---
+
+## JWT
 - 
 
-<br>
+---
 
-> OAuth2
+## OAuth2
 -
 
