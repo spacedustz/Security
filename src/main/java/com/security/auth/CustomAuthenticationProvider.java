@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.Collection;
 import java.util.Optional;
 
-/* Multi Factor Authenticationㅇ을 사용하고 싶을때 직접 인증 처리를 하는 클래스 */
+/* Multi Factor Authentication을 사용하고 싶을때 직접 인증 처리를 하는 클래스 */
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
