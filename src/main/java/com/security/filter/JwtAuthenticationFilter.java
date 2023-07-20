@@ -11,11 +11,10 @@ import lombok.SneakyThrows;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 로그인 인증 요청을 처리하는 Security Filter
@@ -61,14 +60,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authResult) {
-        // Entity 인스턴스화
-        User user = (User) authResult.getPrincipal();
+        String name = authResult.getName();
+        Collection<? extends GrantedAuthority> authorities = authResult.getAuthorities();
+        List<String> roles = authorities.stream().map(auth -> auth.toString()).toList();
 
         // AccessToken 생성
-        String accessToken = delegateAccessToken(user);
+        String accessToken = delegateAccessToken(name, roles);
 
         // Refresh Token 생성
-        String refreshToken = delegateRefreshToken(user);
+        String refreshToken = delegateRefreshToken(name);
 
         // 응답으로 돌려줄 Response의 Header에 Access Token 추가
         response.setHeader("Authorization", "Bearer " + accessToken);
@@ -78,12 +78,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     // Access Token 생성 함수
-    private String delegateAccessToken(User user) {
+    private String delegateAccessToken(String name, List<String> roles) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("name", user.getName());
-        claims.put("roles", user.getRole());
+        claims.put("name", name);
+        claims.put("roles", roles);
 
-        String subject = user.getName();
+        String subject = name;
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
 
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
@@ -94,8 +94,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     // Refresh Token 생성 함수
-    private String delegateRefreshToken(User user) {
-        String subject = user.getName();
+    private String delegateRefreshToken(String name) {
+        String subject = name;
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
 
