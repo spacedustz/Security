@@ -33,6 +33,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenizer = jwtTokenizer;
+        setFilterProcessesUrl("/auth/login"); // Spring Security의 Default Request URL인 /login을 Custom한 API로 변경
     }
 
     // 인증을 시도하는 로직
@@ -51,7 +52,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 new UsernamePasswordAuthenticationToken(loginDto.getName(), loginDto.getPassword());
 
         // AuthenticationManager에게 Token을 전달하며 인증 처리 위임하고 성공하면 '인증된' Authentication 객체 반환
-
         return authenticationManager.authenticate(authenticationToken);
     }
 
