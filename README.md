@@ -13,7 +13,6 @@
 <details>
 <summary>Dependencies</summary>
 
-## Dependencies
 - Spring Web
 - Spring Security
 - Lombok
@@ -28,9 +27,8 @@
 <details>
 <summary>Security 기본 설정 (로그인, 로그아웃, 회원가입, Http Security 설정)</summary>
 
-## Security 기본 설정 (로그인, 로그아웃, 회원가입, Http Security 설정)
 - Local Test를 위한 Inmemory User 권한 생성 방식
-- [DelegatingPasswordEncoder](/auth/DelegatingPasswordEncoder.md)
+- DelegatingPasswordEncoder
 - Custom한 UserDetails, Authority 부여
 - Multi Factor Authentication & Custom한 직접 인증 처리를 위한 AuthenticationProvider
   - AuthenticationProvider에서 AuthenticationException 외에 Exception 발생 시 AuthenticationExcpetion으로 Re-Throw
@@ -68,7 +66,6 @@
 <details>
 <summary>Servlet Filter Chain</summary>
 
-## Servlet Filter Chain
 - Servlet 기반 어플리케이션에서는 javax.servlet 패키지의 인터페이스를 정의하여 doFilter() 함수 호출을 통해 필터 체인을 구성할 수 있다.
 - 이러한 필터체인은 웹 요청,응답 전/후 처리를 할 수 있다.
 - 흐름은 웹요청 -> ServletFilterChain -> HttpServlet -> DispatcherServlet / 응답은 그 반대 이다.
@@ -113,7 +110,6 @@ Filter의 우선순위를 정하는 방법
 <details>
 <summary>JWT</summary>
 
-## JWT
 - 
 
 </details>
@@ -123,7 +119,6 @@ Filter의 우선순위를 정하는 방법
 <details>
 <summary>OAuth2</summary>
 
-## OAuth2
 -
 </details>
 
