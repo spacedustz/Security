@@ -1,10 +1,17 @@
 ## Remind Spring Security
+<details>
+<summary>Spec</summary>
+
 - Spring Security 복습
 - Spring Security 6.1.2 (Spring Security 5 에서 사용하던 각종 함수들이 많이 Deprecated 됨)
 - Spring Boot 3.1.1
 - JDK 17
+</details>
 
----
+<br>
+
+<details>
+<summary>Dependencies</summary>
 
 ## Dependencies
 - Spring Web
@@ -12,14 +19,18 @@
 - Lombok
 - Spring Data JPA
 - H2
+</details>
 
 ---
 
-# Remind 완료 리스트
+## Remind 완료
+
+<details>
+<summary>Security 기본 설정 (로그인, 로그아웃, 회원가입, Http Security 설정)</summary>
 
 ## Security 기본 설정 (로그인, 로그아웃, 회원가입, Http Security 설정)
 - Local Test를 위한 Inmemory User 권한 생성 방식
-- DelegatingPasswordEncoder
+- [DelegatingPasswordEncoder](/auth/DelegatingPasswordEncoder.md)
 - Custom한 UserDetails, Authority 부여
 - Multi Factor Authentication & Custom한 직접 인증 처리를 위한 AuthenticationProvider
   - AuthenticationProvider에서 AuthenticationException 외에 Exception 발생 시 AuthenticationExcpetion으로 Re-Throw
@@ -50,8 +61,12 @@
 - Custom UserDetailsService를 사용해 로그인 인증을 처리하는 방식은 Spring Security가 내부적으로 인증을 대신 처리해 주는 방식이다.
 
 - AuthenticationProvider는 Spring Security에서 클라이언트로부터 전달받은 인증 정보를 바탕으로 인증된 사용자인지를 처리하는 Spring Security의 컴포넌트이다.
+</details>
 
----
+<br>
+
+<details>
+<summary>Servlet Filter Chain</summary>
 
 ## Servlet Filter Chain
 - Servlet 기반 어플리케이션에서는 javax.servlet 패키지의 인터페이스를 정의하여 doFilter() 함수 호출을 통해 필터 체인을 구성할 수 있다.
@@ -91,15 +106,24 @@ Filter의 우선순위를 정하는 방법
 - `@Order` 어노테이션 사용
 - `Ordered` 인터페이스를 구현하는 방법
 - `FilterRegistrationBean`을 이용해 순서를 명시적으로 정할수도 있다.
+</details>
 
+<br>
 
----
+<details>
+<summary>JWT</summary>
 
 ## JWT
 - 
 
----
+</details>
+
+<br>
+
+<details>
+<summary>OAuth2</summary>
 
 ## OAuth2
 -
+</details>
 
