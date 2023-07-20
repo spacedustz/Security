@@ -11,8 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class UserService {
-
-    private final UserDetailsManager manager;
     private final PasswordEncoder encoder;
     private final UserRepository userRepository;
     private final CustomAuthority authority;
