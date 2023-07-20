@@ -110,7 +110,47 @@ Filter의 우선순위를 정하는 방법
 <details>
 <summary>JWT</summary>
 
-- 
+- JWT는 Header, Payload Signature의 구조로 되어있다.
+
+<br>
+
+> Header
+
+Header는 어떤 종류의 토큰인지, 어떤 알고리즘으로 Sign할지 정의한다. (Json Format)
+이걸 Base64로 Encoding 하면 JWT의 첫번째 부분이 완성된다.
+```json
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+```
+
+---
+
+> Payload
+
+Payload에는 서버에서 활용할 수 있는 사용자의 정보가 담겨있다.
+어떤 정보에 접근 가능한지에 대한 권한을 담을 수도, 이름 등 필요한 데이터를 담을 수 있다.
+Payload는 다음으로 설명할 Signature를 통해 유효성이 검증될 정보이지만, 민감한 정보는 안담는게 좋다.
+```json
+{
+  "sub": "someInformation",
+  "name": "phillip",
+  "iat": 151623391
+}
+```
+
+---
+
+> Signature
+
+Base64로 인코딩된 1,2번째 부분이 완성되었다면 여기서는<br>
+원하는 Secret Key, Header에서 지정한 알고리즘을 사용하여 Header/Payload에 대한 단방향 암호화를 수행한다.
+이렇게 암호회된 메시지는 토큰의 위/변조 유무를 검증하는데 사용함
+예를 들어, HMAC SHA256을 사용한다면 Signature는 다음과 같은 방식으로 생성된다.
+```java
+HMACSHA256(base64UrlEncode(header) + '.' + base64UrlEncode(payload), secret);
+```
 
 </details>
 
