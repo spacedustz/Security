@@ -66,4 +66,17 @@ public class JwtTokenizer {
         // Byte Array를 기반으로 적절한 HMAC 알고리즘을 적용한 Key 객체 반환
         return Keys.hmacShaKeyFor(keyBytes);
     }
+
+    // Jwt의 Signature 검증 함수
+    public void verifySignature(
+            String jws,
+            String base64EncodedSecretKey
+    ) {
+        Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
+
+        Jwts.parserBuilder()
+                .setSigningKey(key) // Sign에 사용된 Key 지정
+                .build()
+                .parseClaimsJws(jws); // Jwt를 Parsing해서 Claims를 얻는다
+    }
 }
