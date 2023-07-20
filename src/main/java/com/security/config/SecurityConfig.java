@@ -67,28 +67,6 @@ public class SecurityConfig {
                 .build();
     }
 
-    // InMemory User - Local Test용
-    @Bean
-    public UserDetailsManager userDetailsManager() {
-        // User 추가
-        UserDetails user =
-                User.withDefaultPasswordEncoder() // Default PasswordEncoder 사용
-                        .username("user")
-                        .password("1234") // 패스워드 암호화
-                        .roles("USER")
-                        .build();
-
-        // Admin User 추가
-        UserDetails admin =
-                User.withDefaultPasswordEncoder()
-                        .username("admin")
-                        .password("1234")
-                        .roles("ADMIN")
-                        .build();
-
-        return new InMemoryUserDetailsManager(user, admin);
-    }
-
     // Password Encryption
     @Bean
     public PasswordEncoder passwordEncoder() {
