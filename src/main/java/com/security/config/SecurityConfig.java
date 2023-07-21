@@ -11,6 +11,7 @@ import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.SecurityBuilder;
@@ -31,7 +32,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final JwtTokenizer jwtTokenizer;
@@ -69,8 +70,11 @@ public class SecurityConfig {
                 .apply(new CustomFilter())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-//                        .requestMatchers("/admin/**").hasRole("ADMIN")
-//                        .requestMatchers("/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/admin/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/admin/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/admin/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/admin/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/admin/**").hasRole("ADMIN")
                         .anyRequest().permitAll()
                 )
                 .build();
