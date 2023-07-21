@@ -5,6 +5,7 @@ import com.security.jwt.JwtTokenizer;
 import com.security.user.LoginDto;
 import com.security.user.User;
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
@@ -14,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -32,7 +34,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenizer = jwtTokenizer;
-        setFilterProcessesUrl("/auth/login"); // Spring Security의 Default Request URL인 /login을 Custom한 API로 변경
     }
 
     // 인증을 시도하는 로직
@@ -59,7 +60,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,
                                             FilterChain chain,
-                                            Authentication authResult) {
+                                            Authentication authResult) throws ServletException, IOException {
         String name = authResult.getName();
         Collection<? extends GrantedAuthority> authorities = authResult.getAuthorities();
         List<String> roles = authorities.stream().map(auth -> auth.toString()).toList();
@@ -75,6 +76,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         // 응답으로 돌려줄 Response의 Header에 Refresh Token 추가
         response.setHeader("Refresh", refreshToken);
+
+        // Success Handler 호출
+        this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }
 
     // Access Token 생성 함수
