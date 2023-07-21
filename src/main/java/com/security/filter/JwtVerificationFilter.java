@@ -2,6 +2,7 @@ package com.security.filter;
 
 import com.security.auth.CustomAuthority;
 import com.security.jwt.JwtTokenizer;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.security.SignatureException;
 import java.util.List;
 import java.util.Map;
 
@@ -34,13 +36,18 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
 
-        // JWT 검증 함수인 verufyJws()를 사용하여 검증
-        Map<String, Object> claims = verifyJws(request);
+        try {
+            // JWT 검증 함수인 verufyJws()를 사용하여 검증
+            Map<String, Object> claims = verifyJws(request);
 
-        // Authentication 객체를 SecurityContextHolder에 저장
-        setAuthenticationToContext(claims);
+            // Authentication 객체를 SecurityContextHolder에 저장
+            setAuthenticationToContext(claims);
+        } catch (ExpiredJwtException e) {
+            request.setAttribute("Jwt Expired Exception", e);
+        } catch (Exception ee) {
+            request.setAttribute("Exception", ee);
+        }
 
-        // JWT 서명 검증에 성공한 후, Security Filter 호출
         filterChain.doFilter(request, response);
     }
 
