@@ -1,7 +1,9 @@
 package com.security.config;
 
+import com.security.auth.CustomAuthority;
 import com.security.auth.CustomDetails;
 import com.security.filter.JwtAuthenticationFilter;
+import com.security.filter.JwtVerificationFilter;
 import com.security.handler.AuthenticationFailureHandler;
 import com.security.handler.AuthenticationSuccessHandler;
 import com.security.jwt.JwtTokenizer;
@@ -33,7 +35,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final JwtTokenizer jwtTokenizer;
-    private final CustomDetails details;
+    private final CustomAuthority authority;
 
     /**
      * headers = Same Origin에서의 Request만 허용
@@ -109,8 +111,12 @@ public class SecurityConfig {
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new AuthenticationSuccessHandler());
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new AuthenticationFailureHandler());
 
+            // JWT Verifycation Filter 추가
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authority);
+
             // Security Filter에 추가
             builder.addFilter(jwtAuthenticationFilter);
+            builder.addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
         }
     }
 }
