@@ -113,6 +113,8 @@ Filter의 우선순위를 정하는 방법
 - JWT는 Header, Payload Signature의 구조로 되어있다.
 - JwtTokenizer (토큰 생성 클래스)
 - JwtAuthenticationFilter (Authentication 객체를 생성하고 검증 후 토큰 발급을 해주는 Security Filter)
+  - 이 인증 필터를 구현할때 UsernamePasswordAuthenticationFilter를 구현하는 방법,
+  - OncePerRequestFilter를 구현하는 방법 등 인증 방식에 따라 다양한 필터가 있다
 - JwtVerifycationFilter (발급된 토큰을 검증하는 Verifycation FIlter)
 
 <br>
