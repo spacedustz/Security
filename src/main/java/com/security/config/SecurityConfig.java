@@ -2,6 +2,8 @@ package com.security.config;
 
 import com.security.auth.CustomDetails;
 import com.security.filter.JwtAuthenticationFilter;
+import com.security.handler.AuthenticationFailureHandler;
+import com.security.handler.AuthenticationSuccessHandler;
 import com.security.jwt.JwtTokenizer;
 import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
@@ -101,7 +103,11 @@ public class SecurityConfig {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
             // JwtAuthenticationFilter을 생성하면서 이 Filter 에서 사용되는 Manager,Tokenizer를 넣어줌
+            // Success/Failure Handler 추가
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
+            jwtAuthenticationFilter.setFilterProcessesUrl("/auth/login"); // Spring Security의 Default Request URL인 /login을 Custom한 API로 변경
+            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new AuthenticationSuccessHandler());
+            jwtAuthenticationFilter.setAuthenticationFailureHandler(new AuthenticationFailureHandler());
 
             // Security Filter에 추가
             builder.addFilter(jwtAuthenticationFilter);
