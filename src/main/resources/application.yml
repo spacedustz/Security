@@ -1,4 +1,19 @@
 spring:
+  profiles:
+    active: local
+
+---
+
+
+spring:
+  application:
+    name: security
+
+  config:
+    import: "optional:configserver:http://localhost:8888" # Config-Server
+    activate:
+      on-profile: local
+
   h2:
     console:
       enabled: true
@@ -13,8 +28,22 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: **
+            client-secret: **
 
 jwt:
   key: "skw1234123412341234123412341234123412341234"     # 민감한 정보는 시스템 환경 변수에서 로드한다.
   access-token-expiration-minutes: 30
   refresh-token-expiration-minutes: 420
+
+# Actuator 설정
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
