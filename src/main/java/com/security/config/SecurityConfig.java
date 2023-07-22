@@ -75,8 +75,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PATCH, "/admin/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/admin/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/admin/**").hasRole("ADMIN")
-                        .anyRequest().permitAll()
+                        .anyRequest().authenticated()
                 )
+                .oauth2Login(Customizer.withDefaults()) // OAuth2 활성화
                 .build();
     }
 
