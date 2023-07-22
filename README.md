@@ -183,7 +183,7 @@ AuthenticationSuccessHandler를 지원하며, 로그인 인증 실패 시에도 
 <details>
 <summary>OAuth2</summary>
 
-**Google API**
+## Google API
 
 [Google API 만들기](https://console.cloud.google.com/projectselector2/apis/dashboard?pli=1&supportedpurview=project)
 
@@ -204,7 +204,24 @@ AuthenticationSuccessHandler를 지원하며, 로그인 인증 실패 시에도 
 > 사용자 인증 정보 생성
 
 - 사용자 인정 정보 만들기 유형 = OAuth 클라이언트 ID
-- 앱이름, 리디렉션 URI 지정
+- 앱이름, 리디렉션 URI 지정 (http://localhost:8080/login/oauth2/code/google)
 
+---
+
+## CSR 방식의 Application에서의 OAuth2 Flow
+
+- Resource Owner가 Google Login 버튼 클릭
+- Frontend 어플리케이션에서 Backend 어플리케이션의 OAuth2 로그인 API로 로그인 Request 전성
+- 이때의 Request는 `OAuth2LoginAuthenticationFilter`가 처리한다.
+- Google 로그인 화면을 요청하는 URI로 리다이렉션 한다.
+- 이때 Authorization Code를 전송한 Redirect URI(http://localhost:8080/login/oauth2/google)를 쿼리 파라미터로 전달한다.
+- 예시 : https://account.google.com/o/oauth2/v2/auth?redirect_uri=http://localhost:8080/login/oauth2/code/google
+- 로그인에 성공하면 전달한 Backend Redirect URL로 Authorization Code를 요청한다.
+- `(Spring Security가 내부적으로 자동 처리)` Authorization Server가 Backend 어플리케이션에게 Authorization Code를 응답으로 전송한다.
+- `(Spring Security가 내부적으로 자동 처리)` Backend Application이 Authorization Code를 가지고 Authorization Server에 Access Token을 요청한다.
+- `(Spring Security가 내부적으로 자동 처리)` Authorization Server가 Backend Application에게 Access Token을 응답으로 전송한다.
+- `(Spring Security가 내부적으로 자동 처리)` Backend Application이 Resource Server에 Resource(User Info)를 요청한다.
+- `(Spring Security가 내부적으로 자동 처리)` Resource Server가 Backend Application에게 Resource(User Info)를 응답으로 전송한다.
+- Backend Application은 JWT로 구성된 토큰을 생성 후, Frontend Application에게 JWT를 전달하기 위해 http://localhost?access_token={jwt-access-token}&refresu_token={jwt-refresh-token} 로 Redirect 한다.
 </details>
 
