@@ -183,6 +183,28 @@ AuthenticationSuccessHandler를 지원하며, 로그인 인증 실패 시에도 
 <details>
 <summary>OAuth2</summary>
 
--
+**Google API**
+
+[Google API 만들기](https://console.cloud.google.com/projectselector2/apis/dashboard?pli=1&supportedpurview=project)
+
+> 프로젝트 만들기
+
+- 프로젝트 이름 설정
+- 만들기
+
+<br>
+
+> OAuth 동의 화면 만들기
+
+ - User Type = '외부' 선택
+ - 앱 정보, 개발자 연락처 정보 지정
+
+<br>
+
+> 사용자 인증 정보 생성
+
+- 사용자 인정 정보 만들기 유형 = OAuth 클라이언트 ID
+- 앱이름, 리디렉션 URI 지정
+
 </details>
 
