@@ -31,7 +31,7 @@ public class CustomDetails implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> optUser = userRepository.findByName(username);
+        Optional<User> optUser = userRepository.findByEmail(username);
         User user = optUser.orElseThrow(() -> new EntityNotFoundException("유저를 찾을 수 없습니다."));
 
         // DB에서 조회한 User의 객체를 리턴하면 Spring Security가 이 정보를 이용해 인증 절차를 수행함
@@ -44,6 +44,7 @@ public class CustomDetails implements UserDetailsService {
         InnerDetails(User user) {
             setName(user.getName());
             setPassword(user.getPassword());
+            setEmail(user.getEmail());
             setAge(user.getAge());
             setRole(user.getRole());
         }
