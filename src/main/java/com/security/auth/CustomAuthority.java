@@ -11,8 +11,6 @@ import java.util.stream.Collectors;
 @Component
 public class CustomAuthority {
 
-    private String adminName = "admin";
-
     // 관리자용 권한 리스트
     private final List<String> ADMIN_ROLE = List.of("ADMIN", "USER");
 
@@ -27,8 +25,9 @@ public class CustomAuthority {
                 .collect(Collectors.toList());
     }
 
-    public List<String> createRoles(String name) {
-        if (name.equals(adminName)) return ADMIN_ROLE;
+    public List<String> createRoles(String email) {
+        String adminEmail = "admin@admin.com";
+        if (email.equals(adminEmail)) return ADMIN_ROLE;
         return USER_ROLES;
     }
 }
