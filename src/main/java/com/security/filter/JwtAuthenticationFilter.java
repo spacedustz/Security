@@ -49,7 +49,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         // Username/Password 를 포함한 UsernamePasswordAuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginDto.getName(), loginDto.getPassword());
+                new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
 
         // AuthenticationManager에게 Token을 전달하며 인증 처리 위임하고 성공하면 '인증된' Authentication 객체 반환
         return authenticationManager.authenticate(authenticationToken);
@@ -82,12 +82,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     // Access Token 생성 함수
-    private String delegateAccessToken(String name, List<String> roles) {
+    private String delegateAccessToken(String email, List<String> roles) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("name", name);
+        claims.put("email", email);
         claims.put("roles", roles);
 
-        String subject = name;
+        String subject = email;
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
 
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());

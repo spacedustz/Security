@@ -21,7 +21,7 @@ public class UserService {
         String encrypt = encoder.encode(data.getPassword());
 
         // Create User
-        User user = User.createOf(data.getName(), encrypt, data.getAge());
+        User user = User.createOf(data.getName(), encrypt, data.getEmail(), data.getAge());
 
         // Role 생성
         user.setRole(authority.createRoles(data.getName()));

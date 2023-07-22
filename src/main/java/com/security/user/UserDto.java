@@ -14,6 +14,7 @@ public class UserDto {
     public static class Post {
         private String name;
         private String password;
+        private String email;
         private int age;
     }
 
@@ -22,6 +23,7 @@ public class UserDto {
     public static class Response {
         private Long id;
         private String name;
+        private String email;
         private int age;
         private List<String> role;
         private LocalDateTime createdAt;
@@ -30,6 +32,7 @@ public class UserDto {
             return new UserDto.Response(
                     user.getId(),
                     user.getName(),
+                    user.getEmail(),
                     user.getAge(),
                     user.getRole(),
                     user.getCreatedAt()

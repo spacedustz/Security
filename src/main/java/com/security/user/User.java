@@ -18,6 +18,8 @@ public class User {
     private Long id;
     @Setter private String name;
     @Setter private String password;
+
+    @Setter @Column(unique = true) private String email;
     @Setter private int age;
 
     @Setter
@@ -28,14 +30,23 @@ public class User {
     private LocalDateTime modifiedAt;
     private Boolean deletedAt = false;
 
-    private User(String name, String password, int age) {
+    private User(String email) {
+        this.email = email;
+    }
+
+    private User(String name, String password, String email, int age) {
         this.name = name;
         this.password = password;
+        this.email = email;
         this.age = age;
     }
 
-    public static User createOf(String name, String password, int age) {
-        return new User(name, password, age);
+    public static User createOAuthOf(String email) {
+        return new User(email);
+    }
+
+    public static User createOf(String name, String password, String email, int age) {
+        return new User(name, password, email, age);
     }
 
     public void updateUser(String name, int age) {
