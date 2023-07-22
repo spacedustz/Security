@@ -11,6 +11,11 @@ java {
     sourceCompatibility = '17'
 }
 
+// Spring Cloud Config Client
+ext {
+    set('springCloudVersion', "2022.0.3")
+}
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -47,6 +52,20 @@ dependencies {
 
     // OAuth2 Client
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    // Thymeleaf
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    // Spring Cloud Config Client & Actuator
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+}
+
+// Spring Cloud Config Client
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }
 
 tasks.named('test') {
