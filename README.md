@@ -207,7 +207,7 @@ AuthenticationSuccessHandler를 지원하며, 로그인 인증 실패 시에도 
 - 앱이름, 리디렉션 URI 지정 (http://localhost:8080/login/oauth2/code/google)
 
 ---
-
+ 
 ## CSR 방식의 Application에서의 OAuth2 Flow
 
 - Resource Owner가 Google Login 버튼 클릭
